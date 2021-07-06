@@ -97,7 +97,7 @@ func main() {
 
 			err := client.Call("Vegetable.GetUnitPriceForVegetableName", vegetableName, &priceForVegetable)
 			if err == nil {
-				fmt.Printf("Price 1kg of %s is %f \n", vegetableName, priceForVegetable)
+				fmt.Printf("Price 1kg of %s is RS.%.2f \n", vegetableName, priceForVegetable)
 			} else {
 				fmt.Println("Error: ", err)
 			}
@@ -115,7 +115,7 @@ func main() {
 
 			err := client.Call("Vegetable.GetQuantityForVegetableName", vegetableName, &quantityForVegetable)
 			if err == nil {
-				fmt.Printf("Available Quantity of %s is %f \n", vegetableName, quantityForVegetable)
+				fmt.Printf("Available Quantity of %s is %.2fkg \n", vegetableName, quantityForVegetable)
 			} else {
 				fmt.Println("Error: ", err)
 			}
@@ -220,9 +220,9 @@ func main() {
 
 			if err == nil {
 				fmt.Println("				Vegetable List")
-				fmt.Println("Name		Unit Price 		Quantity")
+				fmt.Println("Name		Unit Price(Rs) 		Quantity(Kg)")
 				for i := 0; i < len(vegetableList); i++ {
-					fmt.Printf("%s		%f		%f \n", vegetableList[i].Name, vegetableList[i].Price, vegetableList[i].Quantity)
+					fmt.Printf("%s			%.2f			%.2f \n", vegetableList[i].Name, vegetableList[i].Price, vegetableList[i].Quantity)
 				}
 			} else {
 				panic(err)
@@ -241,8 +241,8 @@ func main() {
 
 			err := client.Call("Vegetable.GetVegetableDetails", vegetableName, &vegetableDetails)
 			if err == nil {
-				fmt.Printf("Unit Price of %s is %f \n", vegetableName, vegetableDetails.Price)
-				fmt.Printf("Available Quantity of %s is %f \n", vegetableName, vegetableDetails.Quantity)
+				fmt.Printf("Unit Price of %s is RS.%.2f \n", vegetableName, vegetableDetails.Price)
+				fmt.Printf("Available Quantity of %s is %.2fKg \n", vegetableName, vegetableDetails.Quantity)
 			} else {
 				fmt.Println("Error: ", err)
 			}
