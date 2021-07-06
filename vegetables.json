@@ -1,1 +1,4 @@
-[{"id":1,"name":"Tomato","unitPrice":40,"availableAmount":25.4}]
+[
+  {"name":"Carrot","price":200,"quantity":40},
+  {"name":"Tomato","price":160,"quantity":32.5}
+]

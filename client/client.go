@@ -8,90 +8,157 @@ import (
 
 func main() {
 
-	// get RPC client by dialing at `rpc.DefaultRPCPath` endpoint
 	client, _ := rpc.DialHTTP("tcp", "localhost:9000") // or `localhost:9000`
 
-	/*--------------*/
+	var vegetableNamesList []string
+	var priceForVegetable float64
+	var quantityForVegetable float64
+	var isAddVegetableSuccess bool
+	var isUpdatePriceSuccess bool
+	var isUpdateQuantitySuccess bool
+	var vegetableList []common.Vegetable
+	var loopRun bool
 
-	// create john variable of type `common.Student`
-	var vegNames []string
-	var unitPrice, availableQty float32
-	var vegs []common.Vegetable
+	loopRun = true
 
-	fmt.Println("Select a Command")
-	fmt.Println("1 : Get All Vegetable Names ")
-	fmt.Println("2 : Get UnitPrice ")
-	fmt.Println("3 : Get Available Qty ")
-	fmt.Println("4 : Add a new Vegetable")
-	fmt.Println("5 : Update a Vegetable ")
-
-	//reader := bufio.NewReader(os.Stdin)
-	var command int8
-	_, err := fmt.Scanf("%d", &command)
-
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-
-	switch command {
-	case 1:
-		/*--------------Get All Vegetables ---------*/
-		if err := client.Call("Vegetable.GetAllVegetableNames", 0, &vegNames); err != nil {
+	for loopRun {
+		fmt.Println("=======================================================")
+		fmt.Println("Please select operation in below list. Type the Number")
+		fmt.Println("1 : Display All the Vegetable Names")
+		fmt.Println("2 : Display Unit Price for Vegetable Name")
+		fmt.Println("3 : Display Available Quantity for Vegetable Name")
+		fmt.Println("4 : Add a new Vegetable in to Vegetable List")
+		fmt.Println("5 : Update Unit Price for Given Vegetable Name")
+		fmt.Println("6 : Update Available Quantity for Given Vegetable Name")
+		fmt.Println("7 : Display All the Vegetables With Details")
+		fmt.Println("10 : Exit")
+		fmt.Print("Please Type Input : ")
+		var operation int8
+		_, err := fmt.Scanf("%d", &operation)
+		if err != nil {
 			fmt.Println(err)
-		} else {
-			fmt.Printf("All Vegetable Names = %v \n", vegNames)
-		}
-		break
-	case 2:
-		/*--------------Get UnitPrice ---------*/
-
-		if err := client.Call("Vegetable.GetUnitPrice", 1, &unitPrice); err != nil {
-			fmt.Println("Error: Vegetable.getUnitPrice()", err)
-		} else {
-			fmt.Printf("Vegetable.id = %v | UnitPrice  = %v \n", 1, unitPrice)
-		}
-		break
-	case 3:
-		/*--------------Get Available Qty ---------*/
-
-		if err := client.Call("Vegetable.GetAvailableQty", 1, &availableQty); err != nil {
-			fmt.Println("Error: Vegetable.GetAvailableQty()", err)
-		} else {
-			fmt.Printf("Vegetable.id = %v | Available Qty  = %v \n", 1, availableQty)
-		}
-		break
-	case 4:
-		/*--------------Add a new Vegetable ---------*/
-		newVeg := common.Vegetable{
-			Id:           1,
-			Name:         "Tomato",
-			UnitPrice:    30.20,
-			AvailableQty: 5,
+			return
 		}
 
-		if err := client.Call("Vegetable.AddNewVegetable", newVeg, &vegs); err != nil {
-			fmt.Println("Error: Vegetable.Add()", err)
-		} else {
-			fmt.Printf("Added Succesfully \n")
-		}
-		break
-	case 5:
-		/*--------------Update a Vegetable ---------*/
+		switch operation {
+		case 1:
+			err := client.Call("Vegetable.GetVegetablesNameList", 0, &vegetableNamesList)
+			fmt.Println("=======================================================")
 
-		updateVeg := common.Vegetable{
-			Id:           1,
-			AvailableQty: 25.4,
-		}
+			if err == nil {
+				fmt.Printf("				Vegetable Name List")
+				for i := 0; i < len(vegetableNamesList); i++ {
+					fmt.Printf("%s", vegetableNamesList[i])
+				}
+			} else {
+				panic(err)
+			}
+			fmt.Println("=======================================================")
+			break
 
-		if err := client.Call("Vegetable.UpdateVegetable", updateVeg, &updateVeg); err != nil {
-			fmt.Println("Error: Vegetable.UpdateVegetable()", err)
-		} else {
-			fmt.Printf("Succesfully Updated Vegetable %v \n ", updateVeg)
+		case 2:
+			fmt.Println("=======================================================")
+			fmt.Print("Please Type Vegetable Name : ")
+			var vegetableName string
+			_, errScan := fmt.Scanf("%s", &vegetableName)
+			if errScan != nil {
+				panic(errScan)
+			}
+
+			err := client.Call("Vegetable.GetUnitPriceForVegetableName", vegetableName, &priceForVegetable)
+			if err == nil {
+				fmt.Printf("Price 1kg of %s is %f \n", vegetableName, priceForVegetable)
+			} else {
+				fmt.Println("Error: ", err)
+			}
+			fmt.Println("=======================================================")
+			break
+
+		case 3:
+			fmt.Println("=======================================================")
+			fmt.Print("Please Type Vegetable Name : ")
+			var vegetableName string
+			_, errScan := fmt.Scanf("%s", &vegetableName)
+			if errScan != nil {
+				panic(errScan)
+			}
+
+			err := client.Call("Vegetable.GetQuantityForVegetableName", vegetableName, &quantityForVegetable)
+			if err == nil {
+				fmt.Printf("Available Quantity of %s is %f \n", vegetableName, quantityForVegetable)
+			} else {
+				fmt.Println("Error: ", err)
+			}
+			fmt.Println("=======================================================")
+			break
+		case 4:
+			fmt.Println("=======================================================")
+			fmt.Print("Please Type Vegetable Name : ")
+			var vegetableName string
+			_, errName := fmt.Scanf("%s", &vegetableName)
+			if errName != nil {
+				panic(errName)
+			}
+			fmt.Printf("Please Type Unit Price of %s : ", vegetableName)
+			var vegetablePrice float64
+			_, errPrice := fmt.Scanf("%f", &vegetablePrice)
+			if errPrice != nil {
+				panic(errPrice)
+			}
+			fmt.Printf("Please Type Available Quantity of %s : ", vegetableName)
+			var vegetableQuantity float64
+			_, errQuantity := fmt.Scanf("%f", &vegetableQuantity)
+			if errQuantity != nil {
+				panic(errQuantity)
+			}
+
+			newVegetable := common.Vegetable{
+				Name:     vegetableName,
+				Price:    vegetablePrice,
+				Quantity: vegetableQuantity,
+			}
+
+			err := client.Call("Vegetable.AddNewVegetableDetail", newVegetable, &isAddVegetableSuccess)
+			if err == nil {
+				fmt.Println("Added New Vegetable Successfully")
+			} else {
+				fmt.Println("Error: ", err)
+			}
+			fmt.Println("=======================================================")
+			break
+
+		case 5:
+			fmt.Println("=======================================================")
+			fmt.Print("Please Type Vegetable Name : ")
+			var vegetableName string
+			_, errName := fmt.Scanf("%s", &vegetableName)
+			if errName != nil {
+				panic(errName)
+			}
+			fmt.Printf("Please Type updated Unit Price of %s : ", vegetableName)
+			var vegetablePrice float64
+			_, errPrice := fmt.Scanf("%f", &vegetablePrice)
+			if errPrice != nil {
+				panic(errPrice)
+			}
+			updateVegetable := common.Vegetable{
+				Name:     vegetableName,
+				Price:    priceForVegetable,
+				Quantity: 0,
+			}
+
+			err := client.Call("Vegetable.UpdateVegetable", updateVegetable, &isUpdatePriceSuccess)
+			if err == nil {
+				fmt.Printf("Succesfully Updated Price of  %s \n ", vegetableName)
+			} else {
+				fmt.Println("Error: ", err)
+			}
+
+			break
+		default:
+			fmt.Println("Invalid Operation. please Type correct Number")
+
 		}
-		break
-	default:
-		fmt.Println("Invalid Command")
 
 	}
 
