@@ -1,4 +1,5 @@
 [
-  {"name":"Carrot","price":200,"quantity":40},
-  {"name":"Tomato","price":160,"quantity":32.5}
+  {"name":"Carrot","quantity":40,"price":200},
+  {"name":"Tomato","quantity":32.5,"price":160},
+  {"name":"Potatoes","quantity":150,"price":220}
 ]

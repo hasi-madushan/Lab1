@@ -39,6 +39,17 @@ func (v *Vegetable) GetAllVegetablesDetailsList(id int, reply *[]Vegetable) erro
 	return nil
 }
 
+func (v *Vegetable) GetVegetableDetails(name string, reply *Vegetable) error {
+	vegetablesList := ReadAllVegetables()
+	for i := 0; i < len(vegetablesList); i++ {
+		if name == vegetablesList[i].Name {
+			*reply = vegetablesList[i]
+			return nil
+		}
+	}
+	return fmt.Errorf("%s is not in the Vegetable list", name)
+}
+
 func (v *Vegetable) GetVegetablesNameList(id int, reply *[]string) error {
 	vegetablesList := ReadAllVegetables()
 	var VegetableNamesList []string
