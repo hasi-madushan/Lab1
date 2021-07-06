@@ -105,7 +105,7 @@ func (v *Vegetable) AddNewVegetableDetail(vegetable Vegetable, reply *bool) erro
 	return nil
 }
 
-func (v *Vegetable) UpdatePriceOfVegetableByName(vegetable Vegetable, reply *Vegetable) error {
+func (v *Vegetable) UpdatePriceOfVegetableByName(vegetable Vegetable, reply *bool) error {
 	mutex.Lock()
 	defer mutex.Unlock()
 
@@ -117,14 +117,14 @@ func (v *Vegetable) UpdatePriceOfVegetableByName(vegetable Vegetable, reply *Veg
 			}
 			vegetablesList[i].Price = vegetable.Price
 			WriteAllVegetables(vegetablesList)
-			*reply = vegetable
+			*reply = true
 			return nil
 		}
 	}
 
 	return fmt.Errorf("%s is not in the Vegetable list", vegetable.Name)
 }
-func (v *Vegetable) UpdateQuantityOfVegetableByName(vegetable Vegetable, reply *Vegetable) error {
+func (v *Vegetable) UpdateQuantityOfVegetableByName(vegetable Vegetable, reply *bool) error {
 	mutex.Lock()
 	defer mutex.Unlock()
 
@@ -136,7 +136,7 @@ func (v *Vegetable) UpdateQuantityOfVegetableByName(vegetable Vegetable, reply *
 			}
 			vegetablesList[i].Quantity = vegetable.Quantity
 			WriteAllVegetables(vegetablesList)
-			*reply = vegetable
+			*reply = true
 			return nil
 		}
 	}

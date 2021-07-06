@@ -39,14 +39,14 @@ func main() {
 			fmt.Print("Please Type Input : ")
 			firstRun = false
 		} else {
-			fmt.Print("Show Operations Type 1 or Exit Type 2 : ")
+			fmt.Print("Show Operations Type 1 or Exit Type any key except 1 : ")
 			var rerun int8
 			_, err := fmt.Scanf("%d", &rerun)
 			if err != nil {
 				fmt.Println(err)
 				return
 			}
-			if rerun == 2 {
+			if rerun != 1 {
 				break
 			}
 			fmt.Println("=======================================================")
@@ -173,7 +173,7 @@ func main() {
 			}
 			updateVegetable := common.Vegetable{
 				Name:     vegetableName,
-				Price:    priceForVegetable,
+				Price:    vegetablePrice,
 				Quantity: 0,
 			}
 
@@ -222,7 +222,7 @@ func main() {
 				fmt.Println("				Vegetable List")
 				fmt.Println("Name		Unit Price 		Quantity")
 				for i := 0; i < len(vegetableList); i++ {
-					fmt.Printf("%s	%f		%f \n", vegetableList[i].Name, vegetableList[i].Price, vegetableList[i].Quantity)
+					fmt.Printf("%s		%f		%f \n", vegetableList[i].Name, vegetableList[i].Price, vegetableList[i].Quantity)
 				}
 			} else {
 				panic(err)

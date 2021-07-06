@@ -1,5 +1,1 @@
-[
-  {"name":"Carrot","quantity":40,"price":200},
-  {"name":"Tomato","quantity":32.5,"price":160},
-  {"name":"Potatoes","quantity":150,"price":220}
-]
+[{"name":"Potato","quantity":220,"price":250},{"name":"Carrot","quantity":40,"price":200},{"name":"Tomato","quantity":32.5,"price":160},{"name":"EggPlant","quantity":24.75,"price":140},{"name":"Pepper","quantity":10.1,"price":350},{"name":"Pumpkin","quantity":15.8,"price":240},{"name":"Leek","quantity":25,"price":170},{"name":"Beet","quantity":35.5,"price":130},{"name":"Mushroom","quantity":8.4,"price":100},{"name":"Bean","quantity":10.3,"price":135}]
