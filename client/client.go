@@ -8,7 +8,7 @@ import (
 
 func main() {
 
-	client, _ := rpc.DialHTTP("tcp", "localhost:9000") // or `localhost:9000`
+	client, _ := rpc.DialHTTP("tcp", "localhost:9000")
 
 	var vegetableNamesList []string
 	var priceForVegetable float64
